@@ -72,6 +72,25 @@ class BudgetTests(unittest.TestCase):
 
 
 class CatalogTests(unittest.TestCase):
+    def test_array_and_legacy_scalar_preloads_have_identical_costs(self):
+        files = {
+            "plugins/fixture/skills/one/SKILL.md": '---\nname: one\ndescription: "One"\n---\nFirst body\n',
+            "plugins/fixture/skills/two/SKILL.md": '---\nname: two\ndescription: "Two"\n---\nSecond body\n',
+        }
+        catalogs = []
+        for skills in ("skills: one, two", "skills:\n  - one\n  - two", "skills:\n- one\n- two"):
+            files["plugins/fixture/agents/review.md"] = (
+                f'---\nname: review\ndescription: "Review"\n{skills}\n---\nAgent body\n'
+            )
+            catalogs.append(skill_catalog._catalog_from_files(files))
+        self.assertEqual(catalogs[0], catalogs[1])
+        self.assertEqual(catalogs[0], catalogs[2])
+        self.assertEqual(catalogs[1]["agents"][0]["preload"], ["one", "two"])
+        self.assertEqual(
+            catalogs[1]["agents"][0]["preloaded_body_chars"],
+            len("First body") + len("Second body"),
+        )
+
     def test_fixture_catalog_reports_counts_and_preloaded_body_cost(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

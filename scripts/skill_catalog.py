@@ -44,7 +44,7 @@ def _catalog_from_files(files: dict[str, str]) -> dict[str, Any]:
         frontmatter, body = split
         fields = validate._parse_frontmatter_fields(frontmatter)
         description = fields.get("description", "")
-        preload = [s.strip() for s in fields.get("skills", "").split(",") if s.strip()]
+        preload = validate._agent_skill_names(frontmatter)
         preloaded = sum(skill_by_plugin_name.get((parts[1], name), {}).get("body_chars", 0) for name in preload)
         agents.append({"plugin": parts[1], "name": fields.get("name", Path(parts[3]).stem), "description": description, "description_chars": len(description), "path": path, "preload": preload, "preloaded_body_chars": preloaded, "body_chars": len(body), "body_lines": len(body.splitlines())})
     plugins = {plugin: {"skills": [s for s in skills if s["plugin"] == plugin], "agents": [a for a in agents if a["plugin"] == plugin]} for plugin in sorted({s["plugin"] for s in skills} | {a["plugin"] for a in agents})}

@@ -2,7 +2,8 @@
 name: code-simplifier
 description: "Find behavior-preserving simplifications and reuse in any language. Use PROACTIVELY after changes that add complexity, duplication, or redundant state. Defer correctness and architecture review; report without editing."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: simplifying-code
+skills:
+  - simplifying-code
 color: cyan
 ---
 

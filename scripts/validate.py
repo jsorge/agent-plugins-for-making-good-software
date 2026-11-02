@@ -451,6 +451,28 @@ def check_link_integrity() -> list[Finding]:
     return findings
 
 
+def _agent_skill_names(frontmatter_lines: list[str]) -> list[str]:
+    """Read block-sequence skills, retaining scalar support for old catalogs."""
+    for index, line in enumerate(frontmatter_lines):
+        if not line.startswith("skills:"):
+            continue
+        value = _parse_frontmatter_fields([line])["skills"]
+        if value:
+            return [name.strip() for name in value.split(",") if name.strip()]
+        names: list[str] = []
+        for item in frontmatter_lines[index + 1 :]:
+            if not item.strip() or item.lstrip().startswith("#"):
+                continue
+            match = re.match(r"^\s*-\s+(.+)$", item)
+            if not match:
+                break
+            name = _parse_frontmatter_fields([f"skill: {match.group(1)}"])["skill"]
+            if name:
+                names.append(name)
+        return names
+    return []
+
+
 def check_agent_frontmatter() -> list[Finding]:
     findings: list[Finding] = []
     for plugin_dir in sorted((REPO_ROOT / "plugins").glob("*")):
@@ -477,8 +499,7 @@ def check_agent_frontmatter() -> list[Finding]:
             if name != agent_md.stem:
                 findings.append((_rel(agent_md), f"frontmatter name {name!r} does not match filename stem {agent_md.stem!r}"))
 
-            skills_value = fields.get("skills", "")
-            for skill_name in (s.strip() for s in skills_value.split(",") if s.strip()):
+            for skill_name in _agent_skill_names(frontmatter_lines):
                 if not (skills_dir / skill_name).is_dir():
                     findings.append((_rel(agent_md), f"skills entry {skill_name!r} has no matching plugins/{plugin_dir.name}/skills/{skill_name} directory"))
 

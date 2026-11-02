@@ -2,7 +2,8 @@
 name: code-reviewer
 description: "Review structural design and architecture fit. Use PROACTIVELY when reviewing changes for pattern drift or misplaced responsibilities. Defer correctness defects, codified rules, and prose."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: reviewing-code
+skills:
+  - reviewing-code
 color: red
 ---
 

@@ -2,7 +2,8 @@
 name: async-testing-auditor
 description: "Audit synchronization in Swift async tests. Use PROACTIVELY after changes involving observers, tasks, clocks, cancellation, or CI flakes. Defer general test style and production-code defects."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: testing-async-swift-code
+skills:
+  - testing-async-swift-code
 color: cyan
 ---
 

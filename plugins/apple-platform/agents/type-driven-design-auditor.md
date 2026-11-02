@@ -2,7 +2,8 @@
 name: type-driven-design-auditor
 description: "Audit Swift types for compile-time invariant enforcement. Use PROACTIVELY after model or state changes involving flags, optionals, identifiers, or transitions. Defer cosmetic style and architecture fit."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: modeling-swift-types-for-correctness
+skills:
+  - modeling-swift-types-for-correctness
 color: green
 ---
 

@@ -2,7 +2,8 @@
 name: technical-writing-auditor
 description: "Audit developer documentation for accuracy, reader usefulness, structure, and voice. Use PROACTIVELY after docs or API-comment changes. Defer architecture and code defects; report without editing."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: writing-technical-prose
+skills:
+  - writing-technical-prose
 color: yellow
 ---
 

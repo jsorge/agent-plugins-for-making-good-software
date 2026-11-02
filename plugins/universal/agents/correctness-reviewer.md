@@ -2,7 +2,8 @@
 name: correctness-reviewer
 description: "Review correctness, security, concurrency, compatibility, and performance defects. Use PROACTIVELY when assessing a diff, PR, or branch for merge readiness. Defer structural design, codified style, and prose."
 tools: Bash, Glob, Grep, Read, TaskCreate, TaskList
-skills: reviewing-code
+skills:
+  - reviewing-code
 color: blue
 ---
 
